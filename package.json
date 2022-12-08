@@ -17,12 +17,14 @@
   "devDependencies": {
     "@types/node": "^18.11.11",
     "typescript": "^4.9.3"
-    
   },
   "author": "c4smile",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/C4Smile/horizon-cli/issues"
   },
-  "homepage": "https://github.com/C4Smile/horizon-cli#readme"
+  "homepage": "https://github.com/C4Smile/horizon-cli#readme",
+  "dependencies": {
+    "chalk": "^5.1.2"
+  }
 }
