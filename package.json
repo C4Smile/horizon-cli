@@ -1,0 +1,28 @@
+{
+  "name": "horizon-cli",
+  "version": "0.0.1",
+  "description": "horizon cli",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/C4Smile/horizon-cli.git"
+  },
+  "keywords": [
+    "horizon-game"
+  ],
+  "devDependencies": {
+    "@types/node": "^18.11.11",
+    "typescript": "^4.9.3"
+    
+  },
+  "author": "c4smile",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/C4Smile/horizon-cli/issues"
+  },
+  "homepage": "https://github.com/C4Smile/horizon-cli#readme"
+}
