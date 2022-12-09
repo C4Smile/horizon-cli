@@ -17,8 +17,13 @@ const texts = {
         author: "Desarrollado por",
         version: "Versión:",
       },
+      login: {
+        user: "Introduce tu usuario",
+        password: "Introduce tu contraseña",
+      },
     },
     errors: {
+      invalidPassword: "Contraseña incorrecta",
       invalidInput: "Entrada inválida!",
     },
   },

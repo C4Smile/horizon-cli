@@ -27,6 +27,7 @@
   "homepage": "https://github.com/C4Smile/horizon-cli#readme",
   "dependencies": {
     "chalk": "^5.1.2",
+    "prompt-sync": "^4.2.0",
     "sync-input": "https://github.com/hyperskill/sync-input/archive/v1.tar.gz"
   }
 }
