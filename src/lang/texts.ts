@@ -18,8 +18,9 @@ const texts = {
         version: "Versión:",
       },
       login: {
-        user: "Introduce tu usuario",
-        password: "Introduce tu contraseña",
+        title: "Iniciar sesión",
+        user: "Introduce tu usuario: ",
+        password: "Introduce tu contraseña: ",
       },
     },
     errors: {

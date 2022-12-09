@@ -46,7 +46,7 @@ const mainMenu = async () => {
       switch (userInput) {
         case 1:
           console.clear();
-          await login();
+          userInput = await login(lang);
           break;
         case 2:
           console.clear();

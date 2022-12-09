@@ -16,6 +16,7 @@
     "horizon-game"
   ],
   "devDependencies": {
+    "@types/md5": "^2.3.2",
     "@types/node": "^18.11.11",
     "typescript": "^4.9.3"
   },
@@ -26,7 +27,11 @@
   },
   "homepage": "https://github.com/C4Smile/horizon-cli#readme",
   "dependencies": {
+    "axios": "^1.2.1",
     "chalk": "^5.1.2",
+    "dotenv": "^16.0.3",
+    "loading-cli": "^1.1.0",
+    "md5": "^2.3.0",
     "prompt-sync": "^4.2.0",
     "sync-input": "https://github.com/hyperskill/sync-input/archive/v1.tar.gz"
   }
