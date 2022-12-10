@@ -1,8 +1,15 @@
 // services
-import { fetchUser } from "../services/user/post.js";
+import {
+  fetchUser,
+  updateNickService,
+  updateEmailService,
+  updateNationService,
+} from "../services/user/post.js";
 
 // files
 import { updateLog } from "../utils/file.js";
+
+// logs
 import log, { error } from "../utils/log.js";
 
 export default class User {
@@ -81,5 +88,47 @@ export default class User {
 
   set Id(newId: string) {
     this.id = newId;
+  }
+
+  /**
+   *
+   * @param newNick
+   * @throws NETWORK
+   */
+  async updateNick(newNick: string) {
+    await updateNickService(newNick, this.id, this.token);
+  }
+
+  set Nick(newNick: string) {
+    this.updateNick(newNick);
+    this.nick = newNick;
+  }
+
+  /**
+   *
+   * @param newNation
+   * @throws NETWORK
+   */
+  async updateNation(newNation: string) {
+    await updateNationService(newNation, this.id, this.token);
+  }
+
+  set Nation(newNation: string) {
+    this.updateNation(newNation);
+    this.nation = newNation;
+  }
+
+  /**
+   *
+   * @param newEmail
+   * @throws NETWORK
+   */
+  async updateEmail(newEmail: string) {
+    await updateEmailService(newEmail, this.id, this.token);
+  }
+
+  set Email(newEmail: string) {
+    this.updateEmail(newEmail);
+    this.email = newEmail;
   }
 }
