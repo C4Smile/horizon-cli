@@ -24,7 +24,7 @@ const texts = {
       },
     },
     errors: {
-      invalidPassword: "Contraseña incorrecta",
+      wrongCredentials: "Usuario o Contraseña incorrecta",
       invalidInput: "Entrada inválida!",
     },
   },

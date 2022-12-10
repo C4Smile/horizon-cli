@@ -25,10 +25,12 @@ export const validateBasicKey = async (token: string) => {
  * @param userId - the menu name
  * @returns The response from the server.
  */
-export const fetchMenu = async (userId: string, token: string) => {
-  const response = await axios.get(
-    // @ts-ignore
-    `${config.apiUrl}menu/fetch?menuName=${menuName}`,
+export const fetchUser = async (userId: string, token: string) => {
+  const response = await axios.post(
+    `${config.apiURL}user/get`,
+    {
+      id: userId,
+    },
     {
       headers: {
         "Content-type": "application/json; charset=UTF-8",

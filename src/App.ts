@@ -4,6 +4,9 @@ import * as project from "../package.json" assert { type: "json" };
 
 import * as texts from "./lang/texts.js";
 
+// models
+import User from "./driver/user.js";
+
 // services
 import { login } from "./services/auth.js";
 
@@ -16,6 +19,8 @@ import { inputNumber } from "./utils/terminal.js";
 // validation
 import { isValidNumber } from "./utils/validation.js";
 
+// globals
+const theUser = new User();
 const lang = "es";
 
 const showAbout = () => {
@@ -46,7 +51,7 @@ const mainMenu = async () => {
       switch (userInput) {
         case 1:
           console.clear();
-          userInput = await login(lang);
+          userInput = await login(lang, theUser);
           break;
         case 2:
           console.clear();
