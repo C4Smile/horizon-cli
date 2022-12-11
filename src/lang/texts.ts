@@ -53,6 +53,7 @@ const texts = {
     },
     infos: {
       sessionExpired: "Ha expirada la sesión",
+      recoveringSession: "Se ha encontrado una sesión previa",
     },
     errors: {
       wrongCredentials: "Usuario o Contraseña incorrecta",

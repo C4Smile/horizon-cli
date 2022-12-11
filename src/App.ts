@@ -34,7 +34,7 @@ const showAbout = () => {
 const userLogged = () => theUser.Id.length;
 
 const collectUserFromLog = async () => {
-  
+  log(info(texts.default[lang].infos.recoveringSession));
   // reading from session
   try {
     const { user, token, expiration } = readSession();
