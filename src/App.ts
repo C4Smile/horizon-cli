@@ -22,7 +22,7 @@ import { mainMenu } from "./functions/main.js";
 const theUser = new User();
 const lang = "es";
 
-const collectUserFromLog = async () => {
+const collectUserFromLog = async (theUser: User) => {
   log(info(texts.default[lang].infos.recoveringSession));
   // reading from session
   try {
@@ -36,6 +36,7 @@ const collectUserFromLog = async () => {
       }
       await validateBasicKey(token);
       log(good(`${texts.default[lang].success.sessionRecovery} ${user}`));
+      await theUser.initialize(user, token, expiration);
     } else log(error(texts.default[lang].errors.whileReadingSession));
   } catch (err) {
     if (String(err).indexOf("500") > -1)
@@ -51,7 +52,7 @@ const collectUserFromLog = async () => {
 };
 
 const Game = async () => {
-  await collectUserFromLog();
+  await collectUserFromLog(theUser);
   mainMenu(theUser, lang);
 };
 

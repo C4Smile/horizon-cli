@@ -19,11 +19,11 @@ import { dock } from "./dock.js";
 import { manager } from "./manager.js";
 import { showAbout } from "./about.js";
 
-const operations = (theUser: User, lang: string, key: string) => {
+const doOperation = async (theUser: User, lang: string, operation: string) => {
   console.clear();
   const toDo = {
     signIn: async () => {
-      return await login(lang, theUser);
+      await login(lang, theUser);
     },
     manager: async () => {
       await manager(theUser, lang);
@@ -32,20 +32,19 @@ const operations = (theUser: User, lang: string, key: string) => {
       await dock(theUser, lang);
     },
     signOut: async () => {
-      return await logout(theUser, lang);
+      await logout(theUser, lang);
     },
-    about: showAbout(texts.default[lang].main.about, {
-      author: project.default.author,
-      version: project.default.version,
-    }),
+    about: () =>
+      showAbout(texts.default[lang].main.about, {
+        author: project.default.author,
+        version: project.default.version,
+      }),
     exit: () => process.exit(0),
   };
-  toDo[key];
+  await toDo[operation]();
   let a = inputString(texts.default[lang].input.continue);
   return "-1";
 };
-
-const doOperation = async (operation: string) => await operations[operation]();
 
 const userLogged = (theUser: User) => theUser.Id.length;
 
@@ -61,14 +60,21 @@ export const mainMenu = async (theUser: User, lang: string) => {
       );
       if (userLogged(theUser))
         log(`${info(texts.default[lang].main.user)} ${theUser.nick}`);
-      texts.default[lang].main.operations.forEach((item) => {
-        if (
-          item.logged === -1 ||
-          (userLogged(theUser) && item.logged === 1) ||
-          (!userLogged(theUser) && item.logged === 0)
-        )
-          log(`${item.input} - ${item.label}`);
-      });
+      texts.default[lang].main.operations.forEach(
+        (item: {
+          name: string;
+          label: string;
+          logged: number;
+          input: string;
+        }) => {
+          if (
+            item.logged === -1 ||
+            (userLogged(theUser) && item.logged === 1) ||
+            (!userLogged(theUser) && item.logged === 0)
+          )
+            log(`${item.input} - ${item.label}`);
+        }
+      );
       userInput = inputString(texts.default[lang].input.options);
       const findOperation = texts.default[lang].main.operations.find(
         (item: {
@@ -78,7 +84,8 @@ export const mainMenu = async (theUser: User, lang: string) => {
           name: string;
         }) => item.input === userInput.toLowerCase()
       );
-      if (findOperation) userInput = await doOperation(findOperation.name);
+      if (findOperation)
+        userInput = await doOperation(theUser, lang, findOperation.name);
       else log(error(texts.default[lang].errors.invalidInput));
       switch (userInput) {
         case "i":

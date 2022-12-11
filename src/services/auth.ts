@@ -21,7 +21,7 @@ import load from "../utils/loading.js";
 export const validateBasicKey = async (token: string) => {
   const response = await axios.post(
     // @ts-ignore
-    `${config.apiUrl}user/validate`,
+    `${config.apiURL}user/validate`,
     {},
     {
       headers: {
@@ -62,7 +62,6 @@ export const login = async (lang: string, userClass: User) => {
       await userClass.initialize(id, token, expiration);
       load.stop();
       log(good(texts.default[lang].main.login.successfully));
-      let a = inputString(texts.default[lang].input.continue);
       return "-1";
     } catch (err) {
       if (String(err).indexOf("401") > -1)
@@ -87,11 +86,8 @@ export const logout = async (user: User, lang: string) => {
       }
     );
     user.logOut();
-
     load.stop();
     log(good(texts.default[lang].main.logout.successfully));
-    let a = inputString(texts.default[lang].input.continue);
-    return "-1";
   } catch (err) {
     log(error(err));
   }

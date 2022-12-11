@@ -40,27 +40,28 @@ const texts = {
     manager: {
       title: "Gestión",
       operations: [
-        { name: "buildings", label: "Edificios", logged: 1, input: "1" },
+        { name: "buildings", label: "Edificios", input: "1" },
         {
           name: "researches",
           label: "Investigaciones",
-          logged: 1,
           input: "2",
         },
-        { name: "arsenal", label: "Arsenal", logged: 1, input: "3" },
-        { name: "defenses", label: "Defensas", logged: 1, input: "4" },
+        { name: "arsenal", label: "Arsenal", input: "3" },
+        { name: "defenses", label: "Defensas", input: "4" },
+        { name: "back", label: "Volver", input: "b" },
       ],
     },
     dock: {
       title: "Astillero",
       operations: [
-        { name: "fleet", label: "Flota", logged: 1, input: "1" },
-        { name: "map", label: "Mapa", logged: 1, input: "2" },
-        { name: "routes", label: "Rutas Comerciales", logged: 1, input: "3" },
+        { name: "fleet", label: "Flota", input: "1" },
+        { name: "map", label: "Mapa", input: "2" },
+        { name: "routes", label: "Rutas Comerciales", input: "3" },
+        { name: "back", label: "Volver", input: "b" },
       ],
     },
     success: {
-      sessionRecovery: "Sesión recuperada usuario: ",
+      sessionRecovery: "Sesión recuperada usuario:",
     },
     infos: {
       sessionExpired: "Ha expirada la sesión",
