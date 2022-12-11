@@ -51,6 +51,7 @@ const texts = {
     errors: {
       wrongCredentials: "Usuario o Contraseña incorrecta",
       invalidInput: "Entrada inválida!",
+      whileReadingSession: "Error al leer sesión previa",
     },
   },
 };

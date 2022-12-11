@@ -1,4 +1,12 @@
-import { readSync, readdirSync, writeFileSync, rmSync, rmdirSync } from "fs";
+import {
+  readSync,
+  readdirSync,
+  writeFileSync,
+  rmSync,
+  rmdirSync,
+  appendFileSync,
+  readFileSync,
+} from "fs";
 
 export const logActions = {
   signIn: 1,
@@ -10,25 +18,43 @@ export const updateLog = (
   action: number,
   options: {
     user?: string;
-    token?: string;
-    expiration?: string;
   }
 ) => {
   switch (action) {
     case logActions.signIn: {
-      const { user, token, expiration } = options;
-      writeFileSync(
+      const { user } = options;
+      appendFileSync(
         "./user.log",
-        `${user} connected at ${new Date().toUTCString()} with ${token} ${expiration}`
+        `\n${user} connected at ${new Date().toUTCString()}`
       );
       break;
     }
     case logActions.signOut: {
       const { user } = options;
-      writeFileSync(
+      appendFileSync(
         "./user.log",
-        `${user} disconnected at ${new Date().toUTCString()}`
+        `\n${user} disconnected at ${new Date().toUTCString()}`
       );
     }
   }
+};
+
+export const writeSession = (user: string, token: string, expiration: string) =>
+  writeFileSync(
+    "./session",
+    `${Buffer.from(`${user}[!]${token}[!]${expiration}`).toString("base64")}`
+  );
+
+export const cleanSession = () => {
+  writeFileSync("/session", "");
+};
+
+export const readSession = () => {
+  const [user, token, expiration] = Buffer.from(
+    readFileSync("./session", { encoding: "utf-8" }),
+    "base64"
+  )
+    .toString()
+    .split("[!]");
+  return { user, token, expiration };
 };

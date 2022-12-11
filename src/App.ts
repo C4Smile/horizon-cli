@@ -15,6 +15,7 @@ import log, { error, info, titleLog } from "./utils/log.js";
 
 // terminal;
 import { inputString } from "./utils/terminal.js";
+import { readSession } from "./utils/file.js";
 
 // globals
 const theUser = new User();
@@ -30,6 +31,19 @@ const showAbout = () => {
 };
 
 const userLogged = () => theUser.Id.length;
+
+const collectUserFromLog = async () => {
+  // reading from session
+  try {
+    const { user, token, expiration } = readSession();
+    const thisDate = new Date();
+  } catch (err) {
+    log(error(err));
+    log(error(texts.default[lang].errors.whileReadingSession));
+  }
+  let a = inputString(texts.default[lang].input.continue);
+  return "-1";
+};
 
 const operations = {
   signIn: async () => {
@@ -58,6 +72,7 @@ const operations = {
 const doOperation = async (operation: string) => await operations[operation]();
 
 const mainMenu = async () => {
+  await collectUserFromLog();
   try {
     let userInput: string;
     while (userInput !== "z") {

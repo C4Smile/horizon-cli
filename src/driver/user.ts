@@ -7,7 +7,12 @@ import {
 } from "../services/user/post.js";
 
 // files
-import { logActions, updateLog } from "../utils/file.js";
+import {
+  cleanSession,
+  logActions,
+  updateLog,
+  writeSession,
+} from "../utils/file.js";
 
 // logs
 import log, { error } from "../utils/log.js";
@@ -33,7 +38,8 @@ export default class User {
     this.id = id;
     this.token = token;
     try {
-      updateLog(logActions.signIn, { user: id, token, expiration });
+      updateLog(logActions.signIn, { user: id });
+      writeSession(id, token, expiration);
       const response = await fetchUser(id, token);
       const {
         user,
@@ -59,6 +65,8 @@ export default class User {
   }
 
   logOut() {
+    updateLog(logActions.signOut, { user: this.id });
+    cleanSession();
     this.id = "";
     this.token = "";
     this.user = "";
@@ -69,7 +77,6 @@ export default class User {
     this.buildings = {};
     this.technologies = {};
     this.ships = {};
-    updateLog(logActions.signOut, { user: this.id });
   }
 
   // getter
