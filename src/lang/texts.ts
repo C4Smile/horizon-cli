@@ -48,6 +48,12 @@ const texts = {
         successfully: "Sesión cerrada correctamente",
       },
     },
+    success: {
+      sessionRecovery: "Sesión recuperada usuario: ",
+    },
+    infos: {
+      sessionExpired: "Ha expirada la sesión",
+    },
     errors: {
       wrongCredentials: "Usuario o Contraseña incorrecta",
       invalidInput: "Entrada inválida!",

@@ -18,6 +18,24 @@ import { inputPassword, inputString } from "../utils/terminal.js";
 // loading
 import load from "../utils/loading.js";
 
+export const validateBasicKey = async (token: string) => {
+  const response = await axios.post(
+    // @ts-ignore
+    `${config.apiUrl}user/validate`,
+    {},
+    {
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await response.data;
+  if (data.data.message) return true;
+  return false;
+};
+
 /**
  *
  * @param lang

@@ -8,14 +8,15 @@ import * as texts from "./lang/texts.js";
 import User from "./driver/user.js";
 
 // services
-import { login, logout } from "./services/auth.js";
+import { login, logout, validateBasicKey } from "./services/auth.js";
 
 // log
-import log, { error, info, titleLog } from "./utils/log.js";
+import log, { error, good, info, titleLog } from "./utils/log.js";
 
 // terminal;
 import { inputString } from "./utils/terminal.js";
-import { readSession } from "./utils/file.js";
+import { cleanSession, readSession } from "./utils/file.js";
+import { parseDate } from "./utils/parser.js";
 
 // globals
 const theUser = new User();
@@ -33,13 +34,26 @@ const showAbout = () => {
 const userLogged = () => theUser.Id.length;
 
 const collectUserFromLog = async () => {
+  
   // reading from session
   try {
     const { user, token, expiration } = readSession();
+    const expirationDate = parseDate(expiration);
     const thisDate = new Date();
+    if (expirationDate.getTime() > thisDate.getTime()) {
+      log(info(texts.default[lang].infos.sessionExpired));
+      return "-1";
+    }
+    await validateBasicKey(token);
+    log(good(`${texts.default[lang].success.sessionRecovery} ${user}`));
   } catch (err) {
-    log(error(err));
-    log(error(texts.default[lang].errors.whileReadingSession));
+    if (String(err).indexOf("500") > -1)
+      log(error(texts.default[lang].infos.sessionExpired));
+    else {
+      log(error(err));
+      log(error(texts.default[lang].errors.whileReadingSession));
+    }
+    cleanSession();
   }
   let a = inputString(texts.default[lang].input.continue);
   return "-1";

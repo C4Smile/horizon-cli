@@ -5,6 +5,12 @@
 export const parseDate = (string: string) => {
   const [date, time] = string.split(" ");
   const [year, month, day] = date.split("-");
-  const [hour, minute] = date.split(":");
-  
+  const [hour, minute] = time.split(":");
+  return new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(day),
+    Number(hour),
+    Number(minute)
+  );
 };
