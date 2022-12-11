@@ -42,7 +42,7 @@ export const login = async (lang: string, userClass: User) => {
       const { id, token, expiration } = response.data.data;
       await userClass.initialize(id, token, expiration);
       load.stop();
-      // return -1;
+      return "-1";
     } catch (err) {
       if (String(err).indexOf("401") > -1)
         log(error(texts.default[lang].errors.wrongCredentials));

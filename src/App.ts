@@ -14,7 +14,7 @@ import { login } from "./services/auth.js";
 import log, { error, info, titleLog } from "./utils/log.js";
 
 // terminal;
-import { inputNumber } from "./utils/terminal.js";
+import { inputNumber, inputString } from "./utils/terminal.js";
 
 // validation
 import { isValidNumber } from "./utils/validation.js";
@@ -28,32 +28,39 @@ const showAbout = () => {
   log(texts.default[lang].main.about.body);
   log(`${texts.default[lang].main.about.author} ${project.default.author}`);
   log(`${texts.default[lang].main.about.version} ${project.default.version}`);
-  let a = inputNumber(texts.default[lang].input.continue);
-  return -1;
+  let a = inputString(texts.default[lang].input.continue);
+  return "-1";
 };
+
+const userLogged = () => theUser.Id.length;
 
 const mainMenu = async () => {
   try {
-    let userInput: number;
-    while (userInput !== 3) {
+    let userInput: string;
+    while (userInput !== "z") {
       console.clear();
       log(
         titleLog(
           `${texts.default[lang].main.title} ver:${project.default.version}`
         )
       );
-      texts.default[lang].main.operations.forEach((item: string) => log(item));
-      userInput = inputNumber(texts.default[lang].input.options);
-      while (!isValidNumber(userInput)) {
-        log(error(texts.default[lang].errors.invalidInput));
-        userInput = inputNumber(texts.default[lang].input.options);
-      }
+      if (userLogged())
+        log(`${info(texts.default[lang].main.user)} ${theUser.nick}`);
+      texts.default[lang].main.operations.forEach((item) => {
+        if (
+          item.logged === -1 ||
+          (userLogged() && item.logged === 1) ||
+          (!userLogged() && item.logged === 0)
+        )
+          log(item.label);
+      });
+      userInput = inputString(texts.default[lang].input.options);
       switch (userInput) {
-        case 1:
+        case "i":
           console.clear();
           userInput = await login(lang, theUser);
           break;
-        case 2:
+        case "a":
           console.clear();
           userInput = showAbout();
           break;
