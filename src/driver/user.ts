@@ -7,7 +7,7 @@ import {
 } from "../services/user/post.js";
 
 // files
-import { updateLog } from "../utils/file.js";
+import { logActions, updateLog } from "../utils/file.js";
 
 // logs
 import log, { error } from "../utils/log.js";
@@ -33,10 +33,18 @@ export default class User {
     this.id = id;
     this.token = token;
     try {
-      updateLog(id, token, expiration);
+      updateLog(logActions.signIn, { user: id, token, expiration });
       const response = await fetchUser(id, token);
-      const { user, nick, nation, email, resources, buildings, technologies } =
-        response.data;
+      const {
+        user,
+        nick,
+        nation,
+        email,
+        resources,
+        buildings,
+        technologies,
+        ships,
+      } = response.data;
       this.user = user;
       this.nick = nick;
       this.nation = nation;
@@ -44,9 +52,24 @@ export default class User {
       this.resources = resources;
       this.buildings = buildings;
       this.technologies = technologies;
+      this.ships = ships;
     } catch (err) {
       log(error(err));
     }
+  }
+
+  logOut() {
+    this.id = "";
+    this.token = "";
+    this.user = "";
+    this.nick = "";
+    this.nation = "";
+    this.email = "";
+    this.resources = {};
+    this.buildings = {};
+    this.technologies = {};
+    this.ships = {};
+    updateLog(logActions.signOut, { user: this.id });
   }
 
   // getter

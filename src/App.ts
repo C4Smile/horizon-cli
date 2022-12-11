@@ -8,16 +8,13 @@ import * as texts from "./lang/texts.js";
 import User from "./driver/user.js";
 
 // services
-import { login } from "./services/auth.js";
+import { login, logout } from "./services/auth.js";
 
 // log
 import log, { error, info, titleLog } from "./utils/log.js";
 
 // terminal;
-import { inputNumber, inputString } from "./utils/terminal.js";
-
-// validation
-import { isValidNumber } from "./utils/validation.js";
+import { inputString } from "./utils/terminal.js";
 
 // globals
 const theUser = new User();
@@ -33,6 +30,32 @@ const showAbout = () => {
 };
 
 const userLogged = () => theUser.Id.length;
+
+const operations = {
+  signIn: async () => {
+    console.clear();
+    return await login(lang, theUser);
+  },
+  building: async () => {},
+  researches: async () => {},
+  arsenal: async () => {},
+  dock: async () => {},
+  fleet: async () => {},
+  map: async () => {},
+  routes: async () => {},
+  defenses: async () => {},
+  signOut: async () => {
+    console.clear();
+    return await logout(theUser, lang);
+  },
+  about: () => {
+    console.clear();
+    return showAbout();
+  },
+  exit: () => process.exit(0),
+};
+
+const doOperation = async (operation: string) => await operations[operation]();
 
 const mainMenu = async () => {
   try {
@@ -52,20 +75,25 @@ const mainMenu = async () => {
           (userLogged() && item.logged === 1) ||
           (!userLogged() && item.logged === 0)
         )
-          log(item.label);
+          log(`${item.input} - ${item.label}`);
       });
       userInput = inputString(texts.default[lang].input.options);
+      const findOperation = texts.default[lang].main.operations.find(
+        (item: {
+          input: string;
+          label: string;
+          logged: number;
+          name: string;
+        }) => item.input === userInput.toLowerCase()
+      );
+      if (findOperation) userInput = await doOperation(findOperation.name);
+      else log(error(texts.default[lang].errors.invalidInput));
       switch (userInput) {
         case "i":
-          console.clear();
-          userInput = await login(lang, theUser);
           break;
         case "a":
-          console.clear();
-          userInput = showAbout();
           break;
         default:
-          log(error(texts.default[lang].errors.invalidInput));
       }
     }
     process.exit(0);
