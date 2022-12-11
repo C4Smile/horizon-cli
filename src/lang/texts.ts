@@ -9,19 +9,8 @@ const texts = {
       user: "Usuario:",
       operations: [
         { name: "signIn", label: "Iniciar sesión", logged: 0, input: "i" },
-        { name: "buildings", label: "Edificios", logged: 1, input: "1" },
-        {
-          name: "researches",
-          label: "Investigaciones",
-          logged: 1,
-          input: "2",
-        },
-        { name: "arsenal", label: "Arsenal", logged: 1, input: "3" },
-        { name: "dock", label: "Astillero", logged: 1, input: "4" },
-        { name: "fleet", label: "Flota", logged: 1, input: "5" },
-        { name: "map", label: "Mapa", logged: 1, input: "6" },
-        { name: "routes", label: "Rutas Comerciales", logged: 1, input: "7" },
-        { name: "defenses", label: "Defensas", logged: 1, input: "8" },
+        { name: "manager", label: "Gestión", logged: 1, input: "1" },
+        { name: "dock", label: "Astillero", logged: 1, input: "2" },
         { name: "signOut", label: "Cerrar sesión", logged: 1, input: "c" },
         {
           name: "about",
@@ -47,6 +36,28 @@ const texts = {
         title: "Cerrando la sesión",
         successfully: "Sesión cerrada correctamente",
       },
+    },
+    manager: {
+      title: "Gestión",
+      operations: [
+        { name: "buildings", label: "Edificios", logged: 1, input: "1" },
+        {
+          name: "researches",
+          label: "Investigaciones",
+          logged: 1,
+          input: "2",
+        },
+        { name: "arsenal", label: "Arsenal", logged: 1, input: "3" },
+        { name: "defenses", label: "Defensas", logged: 1, input: "4" },
+      ],
+    },
+    dock: {
+      title: "Astillero",
+      operations: [
+        { name: "fleet", label: "Flota", logged: 1, input: "1" },
+        { name: "map", label: "Mapa", logged: 1, input: "2" },
+        { name: "routes", label: "Rutas Comerciales", logged: 1, input: "3" },
+      ],
     },
     success: {
       sessionRecovery: "Sesión recuperada usuario: ",

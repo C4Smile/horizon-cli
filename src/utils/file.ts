@@ -46,15 +46,17 @@ export const writeSession = (user: string, token: string, expiration: string) =>
   );
 
 export const cleanSession = () => {
-  writeFileSync("/session", "");
+  writeFileSync("./session", "");
 };
 
 export const readSession = () => {
-  const [user, token, expiration] = Buffer.from(
+  const session = Buffer.from(
     readFileSync("./session", { encoding: "utf-8" }),
     "base64"
-  )
-    .toString()
-    .split("[!]");
-  return { user, token, expiration };
+  ).toString();
+  if (session.length) {
+    const [user, token, expiration] = session.split("[!]");
+    return { user, token, expiration };
+  }
+  return { user: "", token: "", expiration: "" };
 };
