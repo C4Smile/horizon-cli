@@ -20,12 +20,16 @@ import log, { error } from "../utils/log.js";
 export default class User {
   id: string;
   token: string;
-
   user: string;
   nick: string;
   nation: string;
   email: string;
-  resources: {};
+  resources: {
+    TWF0ZXJpYWxz: number;
+    TWV0YWxz: number;
+    U3VwcGxpZXM: number;
+    Q29pbnM: number;
+  };
   buildings: {};
   technologies: {};
   ships: {};
@@ -73,7 +77,12 @@ export default class User {
     this.nick = "";
     this.nation = "";
     this.email = "";
-    this.resources = {};
+    this.resources = {
+      TWF0ZXJpYWxz: 0,
+      TWV0YWxz: 0,
+      U3VwcGxpZXM: 0,
+      Q29pbnM: 0,
+    };
     this.buildings = {};
     this.technologies = {};
     this.ships = {};
@@ -100,7 +109,12 @@ export default class User {
     return this.email;
   }
 
-  get Resources(): object {
+  get Resources(): {
+    TWF0ZXJpYWxz: number;
+    TWV0YWxz: number;
+    U3VwcGxpZXM: number;
+    Q29pbnM: number;
+  } {
     return this.resources;
   }
 

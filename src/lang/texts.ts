@@ -4,6 +4,12 @@ const texts = {
       options: "Introduce la opción deseada: ",
       continue: "Presiona enter para continuar...",
     },
+    resources: {
+      materials: "Materiales",
+      metals: "Metales",
+      supplies: "Suministros",
+      coins: "Riqueza",
+    },
     main: {
       title: "Bienvenido a Horizon-cli",
       user: "Usuario:",
