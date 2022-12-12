@@ -27,17 +27,12 @@
   },
   "homepage": "https://github.com/C4Smile/horizon-cli#readme",
   "dependencies": {
-    "@types/node-cron": "^3.0.6",
-    "@types/react": "^18.0.26",
     "axios": "^1.2.1",
     "chalk": "^5.1.2",
     "dotenv": "^16.0.3",
-    "ink": "^3.2.0",
     "loading-cli": "^1.1.0",
     "md5": "^2.3.0",
-    "node-cron": "^3.0.2",
     "prompt-sync": "^4.2.0",
-    "react": "^18.2.0",
     "sync-input": "https://github.com/hyperskill/sync-input/archive/v1.tar.gz"
   }
 }
