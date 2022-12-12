@@ -28,8 +28,6 @@ const doOperation = async (theUser: User, lang: string, operation: string) => {
     researches: () => {},
     arsenal: () => {},
     defenses: () => {},
-    back: () => {},
-    exit: () => process.exit(0),
   };
   await toDo[operation]();
   let a = inputString(texts.default[lang].input.continue);
@@ -56,26 +54,19 @@ export const manager = async (theUser: User, lang: string) => {
         }
       );
       userInput = inputString(texts.default[lang].input.options);
-      const findOperation = texts.default[lang].manager.operations.find(
-        (item: {
-          input: string;
-          label: string;
-          logged: number;
-          name: string;
-        }) => item.input === userInput.toLowerCase()
-      );
-      if (findOperation)
-        userInput = await doOperation(theUser, lang, findOperation.name);
-      else log(error(texts.default[lang].errors.invalidInput));
-      switch (userInput) {
-        case "i":
-          break;
-        case "a":
-          break;
-        default:
+      const findOperation = texts.default[lang].manager.operations
+        .filter((item: { exit: boolean }) => !item.exit)
+        .find(
+          (item: { input: string }) => item.input === userInput.toLowerCase()
+        );
+      if (userInput.toLowerCase() !== "z" && userInput.toLowerCase() !== "b") {
+        if (findOperation)
+          userInput = await doOperation(theUser, lang, findOperation.name);
+        else log(error(texts.default[lang].errors.invalidInput));
       }
     }
-    process.exit(0);
+    if (userInput === "z") process.exit(0);
+    else return "b";
   } catch (err) {
     log(error(err));
     process.exit(1);

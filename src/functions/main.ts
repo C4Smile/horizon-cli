@@ -26,7 +26,8 @@ const doOperation = async (theUser: User, lang: string, operation: string) => {
       await login(lang, theUser);
     },
     manager: async () => {
-      await manager(theUser, lang);
+      const result = await manager(theUser, lang);
+      return result;
     },
     dock: async () => {
       await dock(theUser, lang);
@@ -39,9 +40,9 @@ const doOperation = async (theUser: User, lang: string, operation: string) => {
         author: project.default.author,
         version: project.default.version,
       }),
-    exit: () => process.exit(0),
   };
-  await toDo[operation]();
+  const result = await toDo[operation]();
+  if (result === "b") return "-1";
   let a = inputString(texts.default[lang].input.continue);
   return "-1";
 };
@@ -61,12 +62,7 @@ export const mainMenu = async (theUser: User, lang: string) => {
       if (userLogged(theUser))
         log(`${info(texts.default[lang].main.user)} ${theUser.nick}`);
       texts.default[lang].main.operations.forEach(
-        (item: {
-          name: string;
-          label: string;
-          logged: number;
-          input: string;
-        }) => {
+        (item: { label: string; logged: number; input: string }) => {
           if (
             item.logged === -1 ||
             (userLogged(theUser) && item.logged === 1) ||
@@ -76,23 +72,15 @@ export const mainMenu = async (theUser: User, lang: string) => {
         }
       );
       userInput = inputString(texts.default[lang].input.options);
-      const findOperation = texts.default[lang].main.operations.find(
-        (item: {
-          input: string;
-          label: string;
-          logged: number;
-          name: string;
-        }) => item.input === userInput.toLowerCase()
-      );
-      if (findOperation)
-        userInput = await doOperation(theUser, lang, findOperation.name);
-      else log(error(texts.default[lang].errors.invalidInput));
-      switch (userInput) {
-        case "i":
-          break;
-        case "a":
-          break;
-        default:
+      const findOperation = texts.default[lang].main.operations
+        .filter((item: { exit: boolean }) => !item.exit)
+        .find(
+          (item: { input: string }) => item.input === userInput.toLowerCase()
+        );
+      if (userInput.toLowerCase() !== "z") {
+        if (findOperation)
+          userInput = await doOperation(theUser, lang, findOperation.name);
+        else log(error(texts.default[lang].errors.invalidInput));
       }
     }
     process.exit(0);
